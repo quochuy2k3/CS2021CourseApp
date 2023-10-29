@@ -27,32 +27,31 @@ class Category(models.Model):
 
 
 class Course(BaseModel):
-    unique_together = 'subject,Lesson'
     description = models.TextField(null=True, blank=True)
-    image = models.ImageField('Course/ %Y %m', default=None)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    image = models.ImageField('Course/%Y/%m', default=None)
+    category = models.ForeignKey(Category, on_delete=models.RESTRICT)
+    tags = models.ManyToManyField('Tag')
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        unique_together = 'subject,Lesson'
 
 
 class Lesson(BaseModel):
     unique_together = 'subject,course'
-    image = models.ImageField('Lesson/ %Y %m', default=None)
+    image = models.ImageField('Lesson/%Y/%m', default=None)
     content = models.TextField(null=True, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    tags = models.ManyToManyField('Tag')
+
+    class Meta:
+        unique_together = 'subject,Course'
 
 
 class Tag(BaseModel):
     name = models.CharField(max_length=100, null=True)
-
-    def __str__(self):
-        return self.name
-
-
-class tags(Tag):
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
-    tag = models.ForeignKey(Tag, related_name='tag_%(class)s_related', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
