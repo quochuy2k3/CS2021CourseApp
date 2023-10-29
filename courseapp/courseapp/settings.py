@@ -27,7 +27,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
-
+MEDIA_ROOT = '%s/courses/static/' % BASE_DIR
+CKEDITOR_UPLOAD_PATH = 'Lessons/img'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,7 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'courses.apps.CoursesConfig'
+    'courses.apps.CoursesConfig',
+    'ckeditor',
+    'ckeditor_uploader'
 ]
 AUTH_USER_MODEL = 'courses.User'
 MIDDLEWARE = [
@@ -76,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'coursedb',
         'USER': 'root',
-        'PASSWORD': '123456789',
+        'PASSWORD': 'Admin@123',
         'HOST': ''
     }
 }
@@ -99,7 +102,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
